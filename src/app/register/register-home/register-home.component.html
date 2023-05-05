@@ -1,0 +1,61 @@
+<section class="hero is-primary is-fullheight">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-7-tablet is-6-desktop is-3-widescreen">
+            <h1 class="title">Register</h1>
+            <form action="" class="box" (ngSubmit)="addUser">
+                <div class="field">
+                    <label for="" class="label">Username</label>
+                    <div class="control has-icons-left">
+                      <input type="text" placeholder="Enter Username" class="input is-rounded" name="username" required>
+                      <span class="icon is-small is-left">
+                        <i class="fa fa-user"></i>
+                      </span>
+                    </div>
+                  </div>
+              <div class="field">
+                <label for="" class="label">Email</label>
+                <div class="control has-icons-left">
+                  <input type="email" formControlName="email" placeholder="e.g. bobsmith@gmail.com" class="input is-rounded" name="email"  required>
+                  <span class="icon is-small is-left">
+                    <i class="fa fa-envelope"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="" class="label">Password</label>
+                <div class="control has-icons-left">
+                  <input type="password" placeholder="*******" class="input is-rounded" name="password" required>
+                  <span class="icon is-small is-left">
+                    <i class="fa fa-lock"></i>
+                  </span>
+                </div>
+                <ul class="psw-validate">
+                  <li>at least one lowercase</li>
+                  <li>at least one uppercase</li>
+                  <li>at least one number</li>
+                  <li>at least one symbol</li>
+                  <li>minimum length of 8 characters</li>
+                </ul>
+              </div>
+              
+              <div class="field">
+                <button class="button is-success">
+                  Next
+                </button>
+              </div>
+
+              <div class="field">
+                <label class="label">Already registered?
+                  <a routerLink="/login" routerLinkActive="active" style="color:rgb(48, 130, 253)"> Click here!
+                 </a>
+                </label>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <router-outlet></router-outlet>

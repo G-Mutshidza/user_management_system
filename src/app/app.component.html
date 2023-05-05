@@ -1,0 +1,46 @@
+<!-- navigation bar -->
+<title>Home | User Management System</title>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item">
+        Home
+      </a>
+      <a class="navbar-item" routerLink="/userList" routerLinkActive="active">
+        View Users
+      </a>
+      <a class="navbar-item" routerLink="/userManager" routerLinkActive="active">
+        About
+      </a>
+      <a class="navbar-item">
+        Contact
+      </a>
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a routerLink="/register" routerLinkActive="active" class="button is-primary" id="button">
+            <strong>Sign up</strong>
+          </a>
+          <a routerLink="/login" routerLinkActive="active" class="button is-light" id="button">
+            Log in
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</nav>
+
+<router-outlet></router-outlet>

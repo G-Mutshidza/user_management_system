@@ -1,0 +1,9 @@
+
+.profile-img {
+    border: none;
+    border-radius: 10px;
+}
+.alert_cross:hover{
+    color:rgb(195, 196, 195);
+    font-size: 25px;
+}

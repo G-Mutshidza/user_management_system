@@ -1,0 +1,29 @@
+
+<div class="box">
+    <h1 class="title is-3">Available Users</h1>
+</div>
+<div class="container">
+    <table class="ui celled table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Image</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let val of userData">
+            <td data-label="Name">{{val.name}}</td>
+            <td data-label="Email">{{val.email}}</td>
+            <td data-label="Role">{{val.role}}</td>
+            <td data-label="Image">
+                <img [src]="val.imageUrl" alt="" width="150" class="profile-img">
+            </td>
+          </tr>
+          
+          
+        </tbody>
+      </table>
+</div>
+

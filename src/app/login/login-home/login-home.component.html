@@ -1,0 +1,48 @@
+
+<section class="hero is-primary is-fullheight">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-7-tablet is-6-desktop is-3-widescreen" id="animation">
+            <h1 class="title">Login</h1>
+            <form action="" class="box">
+                <div class="field">
+                    <label for="" class="label">Username</label>
+                    <div class="control has-icons-left">
+                      <input type="text" placeholder="Enter Username" class="input is-rounded" required>
+                      <span class="icon is-small is-left">
+                        <i class="fa fa-user"></i>
+                      </span>
+                    </div>
+                  </div>
+              
+              <div class="field">
+                <label for="" class="label">Password</label>
+                <div class="control has-icons-left">
+                  <input type="password" placeholder="*******" class="input is-rounded" required>
+                  <span class="icon is-small is-left">
+                    <i class="fa fa-lock"></i>
+                  </span>
+                </div>
+              </div>
+              
+              <div class="field">
+                <button class="button is-success" id="buttonLogin">
+                  Login
+                </button>
+              </div>
+
+              <div class="field">
+                <label class="label">Not registered?
+                  <a routerLink="/register" routerLinkActive="active"  style="color:rgb(48, 130, 253)"> Click here!
+                 </a>
+                </label>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <router-outlet></router-outlet>
+

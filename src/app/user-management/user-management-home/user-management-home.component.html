@@ -8,8 +8,7 @@
             <th>#</th>
             <th>Name</th>
             <th>Email</th>
-            <th>Role</th>
-            <th>Image Profile</th>
+            <th>Phone Number</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -18,10 +17,7 @@
                 <td data-label="#">{{val.id}}</td>
                 <td data-label="Name">{{val.name}}</td>
                 <td data-label="Email">{{val.email}}</td>
-                <td data-label="Role">{{val.role}}</td>
-                <td data-label="Image Profile">
-                    <img [src]="val.imageUrl" alt="" width="150" class="profile-img">
-                </td>
+                <td data-label="Role">{{val.number}}</td>
                 <td data-label="Action">
                     <a><i (click)="deleteUser(val.id)" class="fa fa-trash fa-2x"></i></a>
                     <br />
@@ -36,88 +32,3 @@
 
     
 </div>
-<div class="container">
-    <div class="column is-centered">
-        <div class="column is-7-tablet is-6-desktop">
-            <div *ngIf="msg" 
-            class="notification is-success" >
-                <button (click)="removeMessage()" class="delete"></button>
-                <strong>Congratulations!!</strong>You have successfully added a user.
-              </div>
-            <form [formGroup]="addUser" class="box"(ngSubmit)="onSubmit()">
-                <div class="box">
-                    <h2 class="title is-4">Add Users</h2>
-                </div>
-                <div class="field">
-                    <label class="label">
-                        Name
-                        <div class="control has-icons-left">
-                            <input type="text" class="input is-rounded" formControlName="name"/>
-                            <span class="icon is-small is-left">
-                                <i class="fa fa-user"></i>
-                            </span>
-                        </div>
-                        
-                    </label>
-                </div>
-
-                <div class="field">
-                    <label class="label">
-                        Email
-                        <div class="control has-icons-left">
-                            <input type="email" class="input is-rounded" formControlName="email"/>
-                            <span class="icon is-small is-left">
-                                <i class="fa fa-envelope"></i>
-                            </span>
-                        </div>
-                        
-                    </label>
-                </div>
-        
-                <div class="field">
-                    <label class="label">
-                        Role
-                        <div class="control has-icons-left">
-                        <input type="text" class="input is-rounded" formControlName="role"/>
-                            <span class="icon is-small is-left">
-                                <i class="fa fa-briefcase"></i>
-                            </span>
-                        </div>
-                        
-                    </label>
-                </div>
-
-                <div class="field">
-                    <label class="label">
-                        Change Image
-                        <div class="control has-icons-left">
-                        <input type="text" class="input is-rounded" formControlName="imageUrl" placeholder="Enter image url"/>
-                            <span class="icon is-small is-left">
-                                <i class="fa fa-camera"></i>
-                            </span>
-                        </div>
-                        
-                    </label>
-                </div>
-
-                <div class="field">
-                    <div class="control has-icons-right">
-                        <button type="submit" class="button is-success">
-                            Add &nbsp;
-                            <span class="icon is-small is-right">
-                                <i class="fa fa-plus-circle"></i>
-                            </span>
-                        </button>
-                        
-                    </div>
-                </div>
-        
-            </form>
-        </div>
-    </div>
-</div>
-
-
-
-<router-outlet></router-outlet>
-

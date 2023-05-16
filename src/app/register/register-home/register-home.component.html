@@ -4,11 +4,11 @@
         <div class="columns is-centered">
           <div class="column is-7-tablet is-6-desktop is-3-widescreen">
             <h1 class="title">Register</h1>
-            <form action="" class="box" (ngSubmit)="addUser">
+            <form action="" class="box" formGroup="registerForm">
                 <div class="field">
-                    <label for="" class="label">Username</label>
+                    <label for="" class="label">Name</label>
                     <div class="control has-icons-left">
-                      <input type="text" placeholder="Enter Username" class="input is-rounded" name="username" required>
+                      <input type="text" placeholder="Enter Full Name" class="input is-rounded" name="username" required>
                       <span class="icon is-small is-left">
                         <i class="fa fa-user"></i>
                       </span>
@@ -17,27 +17,65 @@
               <div class="field">
                 <label for="" class="label">Email</label>
                 <div class="control has-icons-left">
-                  <input type="email" formControlName="email" placeholder="e.g. bobsmith@gmail.com" class="input is-rounded" name="email"  required>
+                  <input 
+                    type="email" 
+                    formControlName="email" 
+                    placeholder="e.g. bobsmith@gmail.com" 
+                    class="input is-rounded" 
+                    name="email" 
+                    [class.is-invalid]="registerForm.controls.email.touched && registerForm.controls.email.invalid"
+                    autocomplete="off" 
+                    duplicateEmail
+                  >
                   <span class="icon is-small is-left">
                     <i class="fa fa-envelope"></i>
                   </span>
+                  <div *ngIf="registerForm.controls.email.invalid">
+                    <div class="text-danger"
+                      *ngIf="registerForm.controls.email.touched && registerForm.controls.email.hasError('required')">
+                      Email is required</div>
+                    <div class="text-danger" *ngIf="registerForm.controls.email.hasError('email')">Email is not valid</div>
+                    <div class="text-danger" *ngIf="registerForm.controls.email.hasError('duplicateEmail')">Email is duplicate</div>
+                    <div class="text-danger" *ngIf="registerForm.controls.email.hasError('blackListed')">Email is blacklisted</div>
+                  </div>
                 </div>
               </div>
+
+              <div class="field">
+                <label for="" class="label">Phone Number</label>
+                <div class="control has-icons-left">
+                  <input type="text" formControlName="email" placeholder="Enter Phone Number" class="input is-rounded" name="ph_number"  required>
+                  <span class="icon is-small is-left">
+                    <i class="fa fa-phone-square"></i>
+                  </span>
+                </div>
+              </div>
+
               <div class="field">
                 <label for="" class="label">Password</label>
                 <div class="control has-icons-left">
-                  <input type="password" placeholder="*******" class="input is-rounded" name="password" required>
+                  <input  
+                     type="password" placeholder="*******" 
+                     class="input is-rounded" 
+                     name="password" 
+                    [class.is-invalid]="registerForm.controls.passwords.controls['password'].touched && registerForm.controls.passwords.controls['password'].invalid"
+                  >
                   <span class="icon is-small is-left">
                     <i class="fa fa-lock"></i>
                   </span>
                 </div>
-                <ul class="psw-validate">
-                  <li>at least one lowercase</li>
-                  <li>at least one uppercase</li>
-                  <li>at least one number</li>
-                  <li>at least one symbol</li>
-                  <li>minimum length of 8 characters</li>
-                </ul>
+                <app-password-strength 
+                  [password]="registerForm.controls.passwords.controls['password'].value"
+                  (strengthChange)="onStrengthChange($event)"
+                >
+                </app-password-strength>
+
+                <div *ngIf="registerForm.controls.passwords.controls['password'].touched">
+                  <div class="text-danger"
+                    *ngIf="registerForm.controls.passwords.controls['password'].touched && registerForm.controls.passwords.controls['password'].hasError('required')">
+                    Password is required</div>
+                </div>
+                
               </div>
               
               <div class="field">

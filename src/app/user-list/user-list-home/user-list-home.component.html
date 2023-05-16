@@ -1,29 +1,30 @@
-
 <div class="box">
-    <h1 class="title is-3">Available Users</h1>
+  <div class="box">
+
+    <h1 class="title">Available Users</h1>
+
+  </div>
+  
+  <div class="container cards">
+    <div class="card" *ngFor="let val of userData">
+      <div class="card-image">
+        <figure class="image is-4by3">
+          <img [src]="val.imageUrl" />
+        </figure>
+      </div>
+      <div class="card-content">
+        <div class="media-content">
+          <p class="title is-4">{{val.name}}</p>
+          <p class="subtitle is-6">{{val.email}}</p>
+        </div>
+        <div class="content">
+          {{val.role}}
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
 </div>
-<div class="container">
-    <table class="ui celled table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Image</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let val of userData">
-            <td data-label="Name">{{val.name}}</td>
-            <td data-label="Email">{{val.email}}</td>
-            <td data-label="Role">{{val.role}}</td>
-            <td data-label="Image">
-                <img [src]="val.imageUrl" alt="" width="150" class="profile-img">
-            </td>
-          </tr>
-          
-          
-        </tbody>
-      </table>
-</div>
+
 

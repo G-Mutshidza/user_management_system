@@ -1,127 +1,132 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChange } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 
 
 @Component({
   selector: 'app-password-strength',
   templateUrl: './password-strength.component.html',
-  styleUrls: ['./password-strength.component.css']
+  styleUrls: ['./password-strength.component.scss']
 })
 
 
+export class PasswordStrengthComponent {
+  @Input() password: string = '';
+  @Input() minLength: number = 8;
+  @Input() numberCheck?: boolean = true;
+  @Input() specialCharCheck?: boolean = true;
+  @Input() smallcaseCheck?: boolean = true;
+  @Input() uppercaseCheck?: boolean = true;
 
-@Component({
-  selector: 'app-password-strength',
-  styleUrls: ['./password-strength.component.scss'],
-  templateUrl: './password-strength.component.html',
-})
-export class PasswordStrengthComponent implements OnChanges {
-  bar0: string = '';
-  bar1: string = '';
-  bar2: string = '';
-  bar3: string = '';
 
-  @Input() public passwordToCheck: string = '';
+  @Output() strengthChange = new EventEmitter<number>();
+  public strengthText: string = '';
+  public score: number = 0;
+  public feedbackArr: Array<Object> = [];
+  constructor() { }
 
-  @Output() passwordStrength = new EventEmitter<boolean>();
+  ngOnInit() {}
 
-  private colors = ['darkred', 'orangered', 'orange', 'yellowgreen'];
-
-  message: string = '';
-  messageColor: string = '';
-
-  checkStrength(password: string) {
-    // 1
-    let force = 0;
-
-    // 2
-    const regex = /[$-/:-?{-~!"^_@`\[\]]/g;
-    const lowerLetters = /[a-z]+/.test(password);
-    const upperLetters = /[A-Z]+/.test(password);
-    const numbers = /[0-9]+/.test(password);
-    const symbols = regex.test(password);
-
-    // 3
-    const flags = [lowerLetters, upperLetters, numbers, symbols];
-
-    // 4
-    let passedMatches = 0;
-    for (const flag of flags) {
-      passedMatches += flag === true ? 1 : 0;
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['password']) {
+      this.checkStrength();
     }
-
-    // 5
-    force += 2 * password.length + (password.length >= 10 ? 1 : 0);
-    force += passedMatches * 10;
-
-    // 6
-    force = password.length <= 6 ? Math.min(force, 10) : force;
-
-    // 7
-    force = passedMatches === 1 ? Math.min(force, 10) : force;
-    force = passedMatches === 2 ? Math.min(force, 20) : force;
-    force = passedMatches === 3 ? Math.min(force, 30) : force;
-    force = passedMatches === 4 ? Math.min(force, 40) : force;
-
-    return force;
   }
 
-  ngOnChanges(changes: { [propName: string]: SimpleChange }): void {
-    const password = changes['passwordToCheck'].currentValue;
-
-    this.setBarColors(4, '#DDD');
-
-    if (password) {
-      const color = this.getColor(this.checkStrength(password));
-      this.setBarColors(color.index, color.color);
-
-      const pwdStrength = this.checkStrength(password);
-      pwdStrength === 40 ? this.passwordStrength.emit(true) : this.passwordStrength.emit(false);
-
-      switch (pwdStrength) {
-        case 10:
-          this.message = 'Poor';
-          break;
-        case 20:
-          this.message = 'Not Good';
-          break;
-        case 30:
-          this.message = 'Average';
-          break;
-        case 40:
-          this.message = 'Good';
-          break;
-      }
+  checkStrength() {
+    let totalCriteria = 1; //One is always there becuse there will be atleast 8 char length check
+    totalCriteria = this.numberCheck ? totalCriteria + 1 : totalCriteria;
+    totalCriteria = this.specialCharCheck ? totalCriteria + 1 : totalCriteria;
+    totalCriteria = this.smallcaseCheck ? totalCriteria + 1 : totalCriteria;
+    totalCriteria = this.uppercaseCheck ? totalCriteria + 1 : totalCriteria;
+    this.feedbackArr = [];
+    this.score = 0;
+    this.score = this.isLengthMet()       ? this.score + parseFloat((100 / totalCriteria).toFixed(2)) : this.score;
+    this.score = this.specialCharCheck && this.isSpecialCharMet() ? this.score + parseFloat((100 / totalCriteria).toFixed(2)) : this.score;
+    this.score = this.numberCheck && this.isNumberMet()           ? this.score + parseFloat((100 / totalCriteria).toFixed(2)) : this.score;
+    this.score = this.smallcaseCheck && this.isSmallcaseMet()     ? this.score + parseFloat((100 / totalCriteria).toFixed(2)) : this.score;
+    this.score = this.uppercaseCheck && this.isUppercaseMet()     ? this.score + parseFloat((100 / totalCriteria).toFixed(2)) : this.score;
+    this.getStrengthText();
+  }
+  isLengthMet() {
+    if(this.password.length >= this.minLength) {
+      this.feedbackArr.push({label: `Minimum ${this.minLength} characters`, status: true});
+      return true;
     } else {
-      this.message = '';
+      this.feedbackArr.push({label: `Minimum ${this.minLength} characters`, status: false});
+      return false;
     }
   }
-
-  private getColor(strength: number) {
-    let index = 0;
-
-    if (strength === 10) {
-      index = 0;
-    } else if (strength === 20) {
-      index = 1;
-    } else if (strength === 30) {
-      index = 2;
-    } else if (strength === 40) {
-      index = 3;
+  isSpecialCharMet() {
+    if( (/[!@#$%*]/).test(this.password) ){
+      this.feedbackArr.push({label: `One special characters`, status: true});
+      return true;
     } else {
-      index = 4;
-    }
-
-    this.messageColor = this.colors[index];
-
-    return {
-      index: index + 1,
-      color: this.colors[index],
-    };
-  }
-
-  private setBarColors(count: number, color: string) {
-    for (let i = 0; i < count; i++) {
-      (this as any)['bar' + i] = color;
+      this.feedbackArr.push({label: `One special characters`, status: false});
+      return false;
     }
   }
+  isNumberMet() {
+    if((/[0-9]/).test(this.password)) {
+      this.feedbackArr.push({label: `One number`, status: true});
+      return true;
+    } else {
+      this.feedbackArr.push({label: `One number`, status: false});
+      return false;
+    }
+  }
+  isSmallcaseMet() {
+    if( (/[a-z]/).test(this.password) ) {
+      this.feedbackArr.push({label: `One smallcase character`, status: true});
+      return true;
+    } else {
+      this.feedbackArr.push({label: `One smallcase character`, status: false});
+      return false;
+    }
+  }
+  isUppercaseMet() {
+    if( (/[A-Z]/).test(this.password) ) {
+      this.feedbackArr.push({label: `One uppercase character`, status: true});
+      return true;
+    } else {
+      this.feedbackArr.push({label: `One uppercase character`, status: false});
+      return false;
+    }
+  }
+
+  getStrengthText() {
+    this.strengthText = ''
+    switch (this.score) {
+      case 1:
+      case 20:
+      case 25:      
+        this.strengthText = 'Too short';
+        break;
+      case 2:
+      case 33.33:
+      case 40:      
+        this.strengthText = 'Weak';
+        break;
+      case 3:
+      case 60:
+      case 50:
+      case 66.66:
+        this.strengthText = 'Fair';
+        break;
+      case 4:
+      case 80:
+      case 75:
+        this.strengthText = 'Good';
+        break;
+      case 5:
+      case 100:
+      case 99.99:
+        this.strengthText = 'Strong';
+        break;
+
+    }
+  }
+  
+  
+  
 }
+
+  

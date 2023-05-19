@@ -3,31 +3,43 @@
     <div class="hero-body">
       <div class="container">
         <div class="columns is-centered">
-          <div class="column is-7-tablet is-6-desktop is-3-widescreen" id="animation">
+          
+          <div class="column is-7-tablet is-6-desktop is-6-widescreen" id="animation">
+            
             <h1 class="title">Login</h1>
-            <form action="" class="box">
+
+            <div class="container">
+              <div class="notification is-danger" *ngIf="loginError">
+                <button (click)="msgDelete()" class="delete"></button>
+                Login <strong>Unsuccessful</strong>, incorrect email or password.
+              </div>
+            </div>
+
+            <form action="" class="box" [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
                 <div class="field">
-                    <label for="" class="label">Username</label>
+                    <label for="" class="label">Email</label>
                     <div class="control has-icons-left">
-                      <input type="text" placeholder="Enter Username" class="input is-rounded" required>
+                      <input type="email" placeholder="Enter Email" class="input is-rounded" formControlName="email" required>
                       <span class="icon is-small is-left">
                         <i class="fa fa-user"></i>
                       </span>
                     </div>
+                    <small class="has-text-danger" *ngIf="loginForm.controls['email'].dirty && loginForm.hasError('required','email')">* Email is required</small>
                   </div>
               
               <div class="field">
                 <label for="" class="label">Password</label>
                 <div class="control has-icons-left">
-                  <input type="password" placeholder="*******" class="input is-rounded" required>
+                  <input type="password" placeholder="*******" class="input is-rounded" formControlName="password" required>
                   <span class="icon is-small is-left">
                     <i class="fa fa-lock"></i>
                   </span>
                 </div>
+                <small class="has-text-danger" *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required','password')">* Password is required</small>
               </div>
               
               <div class="field">
-                <button class="button is-success" id="buttonLogin">
+                <button type="submit" class="button is-success" id="buttonLogin">
                   Login
                 </button>
               </div>

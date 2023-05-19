@@ -3,19 +3,28 @@ import { CommonModule } from '@angular/common';
 
 import { RegisterRoutingModule } from './register-routing.module';
 import { RegisterHomeComponent } from './register-home/register-home.component';
-import { PasswordStrengthComponent } from '../password-strength/password-strength.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
+import { Ng2OrderModule } from 'ng2-order-pipe';
+
+
+
+
+
+
 
 
 
 @NgModule({
   declarations: [
     RegisterHomeComponent,
-    PasswordStrengthComponent
-    
   ],
   imports: [
     CommonModule,
-    RegisterRoutingModule
+    RegisterRoutingModule,
+    ReactiveFormsModule
   ],
   exports: [
     RegisterHomeComponent

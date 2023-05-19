@@ -12,4 +12,9 @@ export class LoginsService {
   getData() {
     return this.http.get(this.url);
   }
+
+  registerUser(data: any) {
+    return this.http.post(this.url, {});
+  }
+  
 }

@@ -1,4 +1,21 @@
-.psw-validate{
-    font-size: x-small;
+
+.success {
+    color: rgb(140, 233, 0);
+    font-weight: bold;
+}
+
+.inactive {
+    color: grey;
     font-style: italic;
 }
+
+.error {
+    color: red;
+    font-size: bold;
+}
+.password_bar {
+    color: grey;
+    width: 20%;
+    height: 10px;
+}
+

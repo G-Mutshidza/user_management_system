@@ -21,27 +21,11 @@ export class UserManagementHomeComponent {
     });
   }
 
-  //adding new user to the server
-  addUser =  new FormGroup({
-    name : new FormControl('') ,
-    email: new FormControl(''),
-    role: new FormControl(''),
-    imageUrl: new FormControl('')
-  });
-
+  //
   //submitting the form
   msg: boolean = false;
   //this function is called when the form is submitted
-   onSubmit(){
-    this.user.addUser(this.addUser.value).subscribe((data) => {
-      
-      this.msg = true;
-      this.ngOnInit();
-      this.removeMessageAfter5Sec();
-      this.addUser.reset();
-    
-    });
-   };
+   
    //removing message after clicking on the button
    //removing message after 5 seconds
    removeMessageAfter5Sec(){
@@ -59,6 +43,4 @@ export class UserManagementHomeComponent {
       this.ngOnInit();
     });
   }
- 
-  
 }

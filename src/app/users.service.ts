@@ -30,5 +30,9 @@ export class UsersService {
   updateUserData(id: any, data: any) {
     return this.http.put(this.url + "/" + id, data);
   }
+  // this function activate or deactivate a user
+  activateDeactivateUser(id: any, data: any) {
+    return this.http.put(this.url + "/" + id, data);
+  }
 
 }

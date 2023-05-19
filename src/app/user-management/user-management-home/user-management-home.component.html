@@ -9,6 +9,8 @@
             <th>Name</th>
             <th>Email</th>
             <th>Phone Number</th>
+            <th>Role</th>
+            <th>Status</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -17,18 +19,20 @@
                 <td data-label="#">{{val.id}}</td>
                 <td data-label="Name">{{val.name}}</td>
                 <td data-label="Email">{{val.email}}</td>
-                <td data-label="Role">{{val.number}}</td>
+                <td data-label="Phone Number">{{val.cellphone}}</td>
+                <td data-label="Role">{{val.role}}</td>
+                <td data-label="Status">
+                  <div class="ui toggle checkbox">
+                    <input type="checkbox" name="public">
+                    <label>Subscribe to weekly newsletter</label>
+                  </div>
+                </td>
                 <td data-label="Action">
                     <a><i (click)="deleteUser(val.id)" class="fa fa-trash fa-2x"></i></a>
                     <br />
-                    <br />
-                    
                     <a routerLink="/edit/{{val.id}}"><i class="fa fa-edit fa-2x"></i></a>
-
                 </td>
             </tr>
         </tbody>
       </table>
-
-    
 </div>

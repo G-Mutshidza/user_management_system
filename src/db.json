@@ -1,0 +1,104 @@
+{
+  "admin-details": [
+    {
+      "id": 1,
+      "email": "admin@email.com",
+      "password": "admin"
+    }
+  ],
+  "user-details": [
+    {
+      "id": 1,
+      "name": "Given Mutshidza",
+      "email": "given@gmail.com",
+      "role": "Software Dev",
+      "cellphone": "0727690572",
+      "password": "given",
+      "isActive": false
+    },
+    {
+      "id": 2,
+      "name": "John Cena",
+      "email": "john@gmail.com",
+      "role": "Wrestler/Actor",
+      "cellphone": "0727690572",
+      "password": "johnc",
+      "isActive": false
+    },
+    {
+      "id": 3,
+      "name": "Maria Carey",
+      "email": "maria@gmail.com",
+      "role": "Singer",
+      "cellphone": "0727690572",
+      "password": "mariac",
+      "isActive": false
+    },
+    {
+      "id": 4,
+      "name": "David Guetta",
+      "email": "david@gmail.com",
+      "role": "Musician",
+      "cellphone": "0727690572",
+      "password": "davidg",
+      "isActive": false
+    },
+    {
+      "id": 5,
+      "name": "Christina Aguilera",
+      "email": "christina@gmail.com",
+      "role": "Singer",
+      "cellphone": "0727690572",
+      "password": "christina",
+      "isActive": false
+    },
+    {
+      "id": 7,
+      "name": "Kentrell Goulding",
+      "email": "kentrell@gmail.com",
+      "role": "Rapper",
+      "cellphone": "0727690572",
+      "password": "kentrellg",
+      "isActive": false
+    },
+    {
+      "id": 8,
+      "name": "Robyn Fenty",
+      "email": "given@gmail.com",
+      "role": "Software Dev",
+      "cellphone": "0727690572",
+      "password": "given",
+      "isActive": false
+    },
+    {
+      "id": 9,
+      "name": "Frank Castle",
+      "email": "frank@gmail.com",
+      "role": "Software Dev",
+      "cellphone": "0727690572",
+      "password": "frankk",
+      "isActive": false
+    },
+    {
+      "id": 10,
+      "name": "Harrison Ford",
+      "email": "given@gmail.com",
+      "role": "Actor/Producer",
+      "cellphone": "0727690572",
+      "password": "given",
+      "isActive": false
+    }
+  ],
+  "roleaccess": [
+    {
+      "role": "admin",
+      "haveedit": false,
+      "loggedIn": true
+    },
+    {
+      "role": "user",
+      "haveedit": true,
+      "loggedIn": true
+    }
+  ]
+}

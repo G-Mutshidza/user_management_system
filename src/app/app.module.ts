@@ -10,12 +10,6 @@ import { UserManagementModule } from './user-management/user-management.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
-// import { PasswordStrengthComponent } from './password-strength/password-strength.component';
-
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,8 +22,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     UserListModule,
     UserManagementModule,
     HttpClientModule,
-    ReactiveFormsModule,
-    
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

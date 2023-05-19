@@ -2,13 +2,31 @@
     <div class="hero-body">
       <div class="container">
         <div class="columns is-centered">
-          <div class="column is-7-tablet is-6-desktop is-3-widescreen">
+          <div class="column is-7-tablet is-6-desktop is-6-widescreen">
+            <div *ngIf="unsuccess" class="notification is-danger">
+              <button class="delete"></button>
+              User registration <strong>Unsuccessful</strong>,
+              please try again!
+            </div>
+
+            <div *ngIf="success" class="notification is-success">
+              <button class="delete"></button>
+              User registration <strong>Successful</strong>,
+              redirecting to Sign In!
+            </div>
             <h1 class="title">Register</h1>
-            <form action="" class="box" formGroup="registerForm">
+
+            <form action="" class="box" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
                 <div class="field">
                     <label for="" class="label">Name</label>
                     <div class="control has-icons-left">
-                      <input type="text" placeholder="Enter Full Name" class="input is-rounded" name="username" required>
+                      <input 
+                        type="text" 
+                        placeholder="Enter Full Name" 
+                        class="input is-rounded" 
+                        name="username" 
+                        formControlName="name" 
+                        required>
                       <span class="icon is-small is-left">
                         <i class="fa fa-user"></i>
                       </span>
@@ -23,28 +41,28 @@
                     placeholder="e.g. bobsmith@gmail.com" 
                     class="input is-rounded" 
                     name="email" 
-                    [class.is-invalid]="registerForm.controls.email.touched && registerForm.controls.email.invalid"
                     autocomplete="off" 
                     duplicateEmail
+                    
+                    required
                   >
                   <span class="icon is-small is-left">
                     <i class="fa fa-envelope"></i>
                   </span>
-                  <div *ngIf="registerForm.controls.email.invalid">
-                    <div class="text-danger"
-                      *ngIf="registerForm.controls.email.touched && registerForm.controls.email.hasError('required')">
-                      Email is required</div>
-                    <div class="text-danger" *ngIf="registerForm.controls.email.hasError('email')">Email is not valid</div>
-                    <div class="text-danger" *ngIf="registerForm.controls.email.hasError('duplicateEmail')">Email is duplicate</div>
-                    <div class="text-danger" *ngIf="registerForm.controls.email.hasError('blackListed')">Email is blacklisted</div>
-                  </div>
+  
                 </div>
               </div>
 
               <div class="field">
                 <label for="" class="label">Phone Number</label>
                 <div class="control has-icons-left">
-                  <input type="text" formControlName="email" placeholder="Enter Phone Number" class="input is-rounded" name="ph_number"  required>
+                  <input 
+                    type="tel" 
+                    formControlName="cellNo" 
+                    placeholder="Enter Phone Number" 
+                    class="input is-rounded" 
+                    name="ph_number"  
+                    required>
                   <span class="icon is-small is-left">
                     <i class="fa fa-phone-square"></i>
                   </span>
@@ -55,32 +73,55 @@
                 <label for="" class="label">Password</label>
                 <div class="control has-icons-left">
                   <input  
-                     type="password" placeholder="*******" 
-                     class="input is-rounded" 
-                     name="password" 
-                    [class.is-invalid]="registerForm.controls.passwords.controls['password'].touched && registerForm.controls.passwords.controls['password'].invalid"
+                    (input)="onCheck($any($event.target).value)"
+                    type="password" placeholder="*******" 
+                    class="input is-rounded" 
+                    name="password" 
+                    formControlName="password"
+                    required
                   >
                   <span class="icon is-small is-left">
                     <i class="fa fa-lock"></i>
                   </span>
                 </div>
-                <app-password-strength 
-                  [password]="registerForm.controls.passwords.controls['password'].value"
-                  (strengthChange)="onStrengthChange($event)"
-                >
-                </app-password-strength>
-
-                <div *ngIf="registerForm.controls.passwords.controls['password'].touched">
-                  <div class="text-danger"
-                    *ngIf="registerForm.controls.passwords.controls['password'].touched && registerForm.controls.passwords.controls['password'].hasError('required')">
-                    Password is required</div>
-                </div>
                 
+              </div>
+
+              <div class="box" >
+                <div *ngIf="progress > 0" class="container">
+                  <progress [ngClass]="progressClass" class="progress" [value]="progress" max="100">15%</progress>
+                </div>
+                <div [ngClass]="validClass.lengClass">
+                  <i class="fa" [ngClass]="errIcon.lengIcon"></i>
+                  <span>&nbsp;<small>Your password must contain at least 8 characters.</small></span>
+                </div>
+
+                <div [ngClass]="validClass.lowerClass">
+                  <i class="fa" [ngClass]="errIcon.lowerIcon"></i>
+                  <span>&nbsp;<small>Your password must contain at least one lowercase letter.</small></span>
+                </div>
+
+                <div [ngClass]="validClass.upperClass">
+                  <i class="fa" [ngClass]="errIcon.upperIcon"></i>
+                  <span>&nbsp;<small>Your password must contain at least one uppercase letter.</small></span>
+                </div>
+
+                <div [ngClass]="validClass.charClass">
+                  <i class="fa" [ngClass]="errIcon.charIcon"></i>
+                  <span>&nbsp;<small>Your password must contain at least one symbol characters.</small></span>
+                </div>
+
+                <div [ngClass]="validClass.digitClass">
+                  <i class="fa" [ngClass]="errIcon.digitIcon"></i>
+                  <span>&nbsp;<small>Your password must contain at least one digit.</small></span>
+                </div>
+
+
               </div>
               
               <div class="field">
-                <button class="button is-success">
-                  Next
+                <button class="button is-success is-centered">
+                  Sign Up
                 </button>
               </div>
 

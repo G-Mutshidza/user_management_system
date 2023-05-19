@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators, FormControl, FormGroup, FormArray } from '@angular/forms';
-import { Observable, Subject, fromEvent } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
-import { exhaustMap, catchError, map, delay } from 'rxjs/operators';
+import { Router } from '@angular/router';
+
+
+
 
 
 @Component({
@@ -11,156 +13,131 @@ import { exhaustMap, catchError, map, delay } from 'rxjs/operators';
   templateUrl: './register-home.component.html',
   styleUrls: ['./register-home.component.css']
 })
-export class RegisterHomeComponent {
-  private submitted: any = false;
-  private duplicateEmailDbounce: any;
+export class RegisterHomeComponent implements OnInit {
+
+  public signUpForm !: FormGroup;
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {}
+
+
   
-  
-
-  @ViewChild('submitButton') submitButton!: ElementRef;
-
-  public showModalConfirmNavigation: boolean = false;
-  public navigateConfirmSubject$: Subject<boolean> = new Subject<boolean>();
-  constructor(private fb: FormBuilder, private apiService: HttpClient) {
-
-  }
-  ngAfterViewInit() {   
-    fromEvent(this.submitButton.nativeElement, 'click').pipe(
-      exhaustMap(() => {
-        console.log('sending api call to register');
-        console.log(this.registerForm)
-        const postData = {
-          email: this.registerForm.controls.email.value,
-          password: this.registerForm.controls.passwords.controls['password'].value
-        };
-        return this.apiService.post('http://localhost:8080/user-details', postData)
-      }
-    )
-  ).subscribe((resp) => {
-    console.log('Registration aesponse arrived');
-      console.log('resp', resp);
-  })}
-  
-  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {    
-    if(this.registerForm.touched) {
-      this.showModalConfirmNavigation = true;
-      return this.navigateConfirmSubject$;
-    } else {
-      return true;
-    }
-  }
-  navigateAction(yesOrNo: boolean) {
-    this.showModalConfirmNavigation = false;
-    this.navigateConfirmSubject$.next(yesOrNo);
+  validClass = {
+    lengClass: 'inactive',
+    digitClass: 'inactive',
+    lowerClass: 'inactive',
+    upperClass: 'inactive',
+    charClass: 'inactive'
   }
 
-
-  public registerForm = this.fb.group({
-      email     : ['', 
-                  [Validators.required, Validators.email], 
-                  [
-                    // this.isEmailUnique.bind(this),
-                    // DuplicateEmailValidator(this.apiService)
-                  ] //async validator(used as  in view)
-                ],
-      passwords : this.fb.group({
-        password        : ['', Validators.compose([Validators.required])],
-        confirmPassword : ['', Validators.compose([Validators.required])]
-      }, {
-        validator: this.confirmPasswordMatch('password', 'confirmPassword')
-    }),
-    hobbies: this.fb.array([ this.createHobby() ])
-  });
-  
-  createHobby(): FormGroup {
-    return this.fb.group({
-      hobbyName:      ['', [Validators.required]],
-      hobbyDetail:    ['', [Validators.required]]
-    });
+  errIcon = {
+    lengIcon: 'fa-ban',
+    digitIcon: 'fa-ban',
+    lowerIcon: 'fa-ban',
+    upperIcon: 'fa-ban',
+    charIcon: 'fa-ban'
   }
 
-  get hobbies(): FormArray {
-    return this.registerForm.get('hobbies') as FormArray;
-  } 
+  success: boolean = false;
+  unsuccess: boolean = false;
+  progress: number = 0;
+  progressClass: string = ''
 
-  addHobby(): void {
-    this.hobbies.push(this.createHobby());
-  }
-  removeHobby(rowIndex: number) {
-		this.hobbies.removeAt(rowIndex);
-	}
-  
-
-
-  ngOnInit() {
-    console.log(this.registerForm)
-  }
-
-  confirmPasswordMatch(controlName: string, matchingControlName: string) {    
-    return (formGroup: FormGroup) => {
-      // console.log(controlName, matchingControlName)
-        const control = formGroup.controls[controlName];
-        const matchingControl = formGroup.controls[matchingControlName];
-
-        // set error on matchingControl if validation fails
-        if (control.value !== matchingControl.value) {
-            matchingControl.setErrors({ confirmPasswordMatch: true });
-        } else {
-            matchingControl.setErrors(null);
-        }
-    }
-}
-
-  // setupEditData(editDataObj: Email) {
-  //     this.editData = {id:editDataObj.id, name: editDataObj.name, email: editDataObj.email};
-  //     this.userForm.setValue(this.editData);
-  // }
-  isEmailUnique(control: FormControl): Observable<any> {
-    clearTimeout(this.duplicateEmailDbounce);
-    return new Observable((observer) => {
-      this.duplicateEmailDbounce = setTimeout(() => {
-        this.apiService.post('http://localhost:8080/user-details', { email: control.value })
-          .pipe(
-            delay(1000), // Delay the request for 1 second
-            map((resp:  any) => ({ duplicateEmail: resp['data'].isDuplicate })),
-          )
-          .subscribe((result) => {
-            observer.next(result);
-            observer.complete();
-          });
-      }, 1000);
-    });
-  }
-  
-  onSubmit(){
-  //     this.submitted = true;
-  //     if(this.userForm.valid) {
-  //         let postData = {
-  //             id      : this.userForm.value.id,
-  //             name    : this.userForm.value.name,
-  //             email   : this.userForm.value.email
-  //         }
-  //         if(this.userForm.value.id != '') {
-  //             this.apiService.put('http://localhost:3003/email', postData).subscribe(data => {
-                  
-  //                 this.messageService.setMessage(1);
-  //                 this.router.navigate(['/emails']);
-  //             });
-  //         } else {
-  //             this.apiService.post('http://localhost:3003/email', postData).subscribe(data => {
-  //                 this.router.navigate(['/emails']);
-  //             });
-  //         }
-  //     }
+  ngOnInit(): void {
+      this.signUpForm = this.fb.group({
+        name: ['',Validators.required, Validators.minLength(3)],
+        email: ['',Validators.required,  Validators.email,  Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')],
+        cellNo:  ['',Validators.required, Validators.pattern('^[0-9]{10}$')],
+        password: ['',Validators.required,  Validators.minLength(8),   Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})')]
+      })
       
-   };
+  }
 
-   onStrengthChange(strength:  number) {
-     console.log(strength)
-   }
+  onSubmit = () => {
+    this.http.post('http://localhost:8080/user-details', this.signUpForm.value)
+    .subscribe(res => {
+      
+      this.onRegSuccess();
+      this.signUpForm.reset();
+    },
+    err=> {
+      this.unsuccess = true;
+    })
+    
+  }
 
-   ngOnDestroy(){
-    document.removeEventListener('click', this.submitButton.nativeElement, false);
-    console.log("Removed event listener"); 
-}
+
+  onRegSuccess = () => {
+    this.success = true;
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    }, 2000)
+  }
+
+  onCheck(event: string){
+    //validates for the password length
+    if(event.match('^.{8,32}$')) {
+      this.validClass.lengClass = 'success'
+      this.errIcon.lengIcon = 'fa-check'
+    }
+    else {
+      this.validClass.lengClass = 'error'
+      this.errIcon.lengIcon = 'fa-times'
+    }
+
+    //checks if the password contains lowercases
+    if(event.match('[a-z]')) {
+      this.validClass.lowerClass = 'success'
+      this.errIcon.lowerIcon = 'fa-check'
+    }
+    else {
+      this.validClass.lowerClass = 'error'
+      this.errIcon.lowerIcon = 'fa-times'
+    }
+    
+    //checks if the password contains uppercases
+    if(event.match('[A-Z]')) {
+      this.validClass.upperClass = 'success'
+      this.errIcon.upperIcon = 'fa-check'
+    }
+    else {
+      this.validClass.upperClass = 'error'
+      this.errIcon.upperIcon = 'fa-times'
+    }
+
+    //checks if the password contains symbols
+    if(event.match('[!@#$%^&*.?]')) {
+      this.validClass.charClass = 'success'
+      this.errIcon.charIcon = 'fa-check'
+    }
+    else {
+      this.validClass.charClass = 'error'
+      this.errIcon.charIcon = 'fa-times'
+    }
+
+    //checks if the password contains digits
+    if(event.match('[0-9]')) {
+      this.validClass.digitClass = 'success'
+      this.errIcon.digitIcon = 'fa-check'
+    }
+    else {
+      this.validClass.digitClass = 'error'
+      this.errIcon.digitIcon = 'fa-times'
+    }
+
+    //checks if the textfield is empty
+    //if empty, the password requirement labels should be greyed out
+    if(this.signUpForm.controls['password'].dirty && this.signUpForm.hasError('required','password')){
+      this.validClass.lengClass = 'inactive'
+      this.validClass.digitClass = 'inactive'
+      this.validClass.lowerClass = 'inactive'
+      this.validClass.upperClass = 'inactive'
+      this.validClass.charClass = 'inactive'
+
+      this.errIcon.lengIcon = 'fa-ban'
+      this.errIcon.digitIcon = 'fa-ban'
+      this.errIcon.lowerIcon = 'fa-ban'
+      this.errIcon.upperIcon = 'fa-ban'
+      this.errIcon.charIcon = 'fa-ban'
+      this.progress = 0
+    } 
+  }
 }

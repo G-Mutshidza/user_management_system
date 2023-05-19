@@ -5,7 +5,7 @@ import { AppGuardGuard } from '../security/app-guard.guard';
 
 const routes: Routes = [
   { 
-    path: 'userManager', component: UserManagementHomeComponent,
+    path: 'admin-home', component: UserManagementHomeComponent,
     canActivate: [AppGuardGuard]
    }
 ];

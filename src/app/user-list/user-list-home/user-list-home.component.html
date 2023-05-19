@@ -1,29 +1,36 @@
 <div class="box">
   <div class="box">
+    Welcome, {{ username }}
+  </div>
+  <div class="box">
 
     <h1 class="title">Available Users</h1>
 
   </div>
   
+
   <div class="container cards">
-    <div class="card" *ngFor="let val of userData">
-      <div class="card-image">
-        <figure class="image is-4by3">
-          <img [src]="val.imageUrl" />
-        </figure>
-      </div>
-      <div class="card-content">
-        <div class="media-content">
-          <p class="title is-4">{{val.name}}</p>
-          <p class="subtitle is-6">{{val.email}}</p>
+    
+      <div class="card" *ngFor="let val of userData">
+        
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img [src]="val.imageUrl" />
+          </figure>
         </div>
-        <div class="content">
-          {{val.role}}
+        <div class="card-content">
+          <div class="media-content">
+            <p class="title is-5">{{val.name}} - <span class="title is-6">{{val.role}}</span></p>
+            <p class="subtitle is-6"><strong>Cell&nbsp;&nbsp;&nbsp;: </strong>{{val.cellphone}}</p>
+            <p class="subtitle is-6"><strong>Email: </strong>{{val.email}}</p>
+          </div>
+          
         </div>
       </div>
     </div>
     
-  </div>
+    
+  
 
 </div>
 

@@ -16,10 +16,17 @@
             </div>
 
             <form action="" class="box" [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
+             
                 <div class="field">
-                    <label for="" class="label">Email</label>
+                    <label for="email" class="label">Email</label>
                     <div class="control has-icons-left">
-                      <input type="email" placeholder="Enter Email" class="input is-rounded" formControlName="email" required>
+                      <input 
+                        type="email" 
+                        placeholder="Enter Email" 
+                        class="input is-rounded" 
+                        name="email"
+                        formControlName="email" 
+                        required>
                       <span class="icon is-small is-left">
                         <i class="fa fa-user"></i>
                       </span>
@@ -28,9 +35,15 @@
                   </div>
               
               <div class="field">
-                <label for="" class="label">Password</label>
+                <label for="password" class="label">Password</label>
                 <div class="control has-icons-left">
-                  <input type="password" placeholder="*******" class="input is-rounded" formControlName="password" required>
+                  <input 
+                    type="password" 
+                    placeholder="*******" 
+                    class="input is-rounded" 
+                    formControlName="password" 
+                    name="password"
+                    required>
                   <span class="icon is-small is-left">
                     <i class="fa fa-lock"></i>
                   </span>
@@ -46,7 +59,7 @@
 
               <div class="field">
                 <label class="label">Not registered?
-                  <a routerLink="/register" routerLinkActive="active"  style="color:rgb(48, 130, 253)"> Click here!
+                  <a routerLink="/sign-up" routerLinkActive="active"  style="color:rgb(48, 130, 253)"> Click here!
                  </a>
                 </label>
               </div>

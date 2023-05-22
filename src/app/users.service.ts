@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http'
+import { LoginHomeComponent } from './login/login-home/login-home.component';
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +32,29 @@ export class UsersService {
     return this.http.put(this.url + "/" + id, data);
   }
   // this function activate or deactivate a user
-  activateDeactivateUser(id: any, data: any) {
+  userStatus(id: any, data: any) {
     return this.http.put(this.url + "/" + id, data);
   }
 
+   //checking if the user is available
+   userAvailable(name: string) {
+    this.http.post<any>("http://localhost:8080/user-available", {name })
+  }
+   
+  signup(data: any) {
+    return this.http.post(this.url, data);
+  }
+
+  isLoggedIn(){
+    return sessionStorage.getItem('username') != null
+  }
+
+  //user login
+  login() {
+    return this.http.get(this.url);
+  }
+   
+
 }
+
+

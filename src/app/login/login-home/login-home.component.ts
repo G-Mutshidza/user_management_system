@@ -15,10 +15,11 @@ import { LoginsService } from 'src/app/logins.service';
 export class LoginHomeComponent {
   constructor(private http: HttpClient,  private fb: FormBuilder, private route: Router) {}
 
-  public loginForm!:  FormGroup;
-  public loginError: boolean = false;
-  loggedIn: boolean = false;
-  userLogged: string = '';
+  public loginForm!:  FormGroup
+  public loginError: boolean = false
+  loggedIn: boolean = false
+  userLogged!: any 
+  accessUrl!: string
 
 
   ngOnInit() {
@@ -29,19 +30,24 @@ export class LoginHomeComponent {
   }
 
   msgDelete() {
-    this.loginError = false;
+    this.loginError = false
   }
 
 
   onSubmit() {
     //user login validation
+    
     this.http.get<any>("http://localhost:8080/user-details").subscribe(res => {
       const user = res.find((a:any) => {
+        //the outer if statement check to see if the entered values matches with the data on the database
         return a.email === this.loginForm.value.email && a.password === this.loginForm.value.password
+          
       })
-      
+      console.log(user)
+      //if the user login user is available in the database then redirect to designated route
       if (user) {
-        localStorage.setItem('userLogged', this.userLogged)
+        this.userLogged = sessionStorage.getItem(user.name)
+        console.log(this.userLogged)
         this.deleteMsg()
         this.loginForm.reset()
         this.loggedIn = true;
@@ -56,30 +62,8 @@ export class LoginHomeComponent {
     }, err=>{
       alert()
     })
+    
 
-    //admin login validation
-    this.http.get<any>("http://localhost:8080/admin-details").subscribe(res => {
-      const admin = res.find((a:any) => {
-        this.userLogged = a.name;
-        return a.email === this.loginForm.value.email && a.password === this.loginForm.value.password
-      })
-      
-      if (admin) {
-        localStorage.setItem('userLogged', this.userLogged)
-        this.deleteMsg()
-        this.loginForm.reset()
-        this.loggedIn = true;
-        this.route.navigate(['/admin-home'])
-      }
-      else {
-        this.loginError = true;
-        this.deleteMsg()
-        this.loginForm.reset()
-
-      }
-    }, err => {
-      alert()
-    })
   }
     
   

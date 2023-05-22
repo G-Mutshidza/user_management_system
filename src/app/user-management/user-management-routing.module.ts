@@ -5,9 +5,8 @@ import { AppGuardGuard } from '../security/app-guard.guard';
 
 const routes: Routes = [
   { 
-    path: 'admin-home', component: UserManagementHomeComponent,
-    canActivate: [AppGuardGuard]
-   }
+    path: 'admin-home', component: UserManagementHomeComponent
+  }
 ];
 
 @NgModule({

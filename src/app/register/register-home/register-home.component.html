@@ -18,7 +18,7 @@
 
             <form action="" class="box" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
                 <div class="field">
-                    <label for="" class="label">Name</label>
+                    <label class="label">Name</label>
                     <div class="control has-icons-left">
                       <input 
                         type="text" 
@@ -33,7 +33,7 @@
                     </div>
                   </div>
               <div class="field">
-                <label for="" class="label">Email</label>
+                <label class="label">Email</label>
                 <div class="control has-icons-left">
                   <input 
                     type="email" 
@@ -54,7 +54,7 @@
               </div>
 
               <div class="field">
-                <label for="" class="label">Phone Number</label>
+                <label class="label" >Phone Number</label>
                 <div class="control has-icons-left">
                   <input 
                     type="tel" 
@@ -70,7 +70,7 @@
               </div>
 
               <div class="field">
-                <label for="" class="label">Password</label>
+                <label class="label">Password</label>
                 <div class="control has-icons-left">
                   <input  
                     (input)="onCheck($any($event.target).value)"
@@ -88,46 +88,41 @@
               </div>
 
               <div class="box" >
-                <div *ngIf="progress > 0" class="container">
-                  <progress [ngClass]="progressClass" class="progress" [value]="progress" max="100">15%</progress>
-                </div>
                 <div [ngClass]="validClass.lengClass">
                   <i class="fa" [ngClass]="errIcon.lengIcon"></i>
-                  <span>&nbsp;<small>Your password must contain at least 8 characters.</small></span>
+                  <span>&nbsp;<small>The password must contain at least 8 characters.</small></span>
                 </div>
 
                 <div [ngClass]="validClass.lowerClass">
                   <i class="fa" [ngClass]="errIcon.lowerIcon"></i>
-                  <span>&nbsp;<small>Your password must contain at least one lowercase letter.</small></span>
+                  <span>&nbsp;<small>The password must contain at least one lowercase letter.</small></span>
                 </div>
 
                 <div [ngClass]="validClass.upperClass">
                   <i class="fa" [ngClass]="errIcon.upperIcon"></i>
-                  <span>&nbsp;<small>Your password must contain at least one uppercase letter.</small></span>
+                  <span>&nbsp;<small>The password must contain at least one uppercase letter.</small></span>
                 </div>
 
                 <div [ngClass]="validClass.charClass">
                   <i class="fa" [ngClass]="errIcon.charIcon"></i>
-                  <span>&nbsp;<small>Your password must contain at least one symbol characters.</small></span>
+                  <span>&nbsp;<small>The password must contain at least one symbol characters.</small></span>
                 </div>
 
                 <div [ngClass]="validClass.digitClass">
                   <i class="fa" [ngClass]="errIcon.digitIcon"></i>
-                  <span>&nbsp;<small>Your password must contain at least one digit.</small></span>
+                  <span>&nbsp;<small>The password must contain at least one digit.</small></span>
                 </div>
-
-
               </div>
               
               <div class="field">
-                <button class="button is-success is-centered">
+                <button class="button is-success">
                   Sign Up
                 </button>
               </div>
 
               <div class="field">
                 <label class="label">Already registered?
-                  <a routerLink="/login" routerLinkActive="active" style="color:rgb(48, 130, 253)"> Click here!
+                  <a routerLink="/sign-in" routerLinkActive="active" style="color:rgb(48, 130, 253)"> Click here!
                  </a>
                 </label>
               </div>

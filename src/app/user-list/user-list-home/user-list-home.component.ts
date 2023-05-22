@@ -12,19 +12,14 @@ export class UserListHomeComponent {
 
   constructor(private user: UsersService,  public login: LoginHomeComponent) { }
   userData: any;
-  username: string = "";
+  username = this.user.isLoggedIn()
   ngOnInit(): void{
     this.user.getAllUsers().subscribe((allData) => {
       console.log(allData);
-      this.username += this.login.userLogged
+      this.login.onSubmit()
       this.userData = allData;
     });
   }
 
-  //activating or deactivating user from the server
-  activateDeactivateUser(id: number, isActive: boolean){
-    this.user.activateDeactivateUser(id, isActive).subscribe((data) => {
-      this.ngOnInit();
-    });
-  }
+
 }

@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { UsersService } from 'src/app/users.service';
 
 
+
 @Component({
   selector: 'app-user-management-home',
   templateUrl: './user-management-home.component.html',
@@ -18,6 +19,12 @@ export class UserManagementHomeComponent {
     this.user.getAllUsers().subscribe((allData) => {
       console.log(allData);
       this.userData = allData;
+    });
+  }
+
+  onChecked(id: number, isActive: boolean){
+    this.user.userStatus(id, isActive).subscribe((data) => {
+      this.userData.isActive = isActive
     });
   }
 
@@ -44,3 +51,4 @@ export class UserManagementHomeComponent {
     });
   }
 }
+

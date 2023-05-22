@@ -1,6 +1,6 @@
 <!-- navigation bar -->
 <title>Home | User Management System</title>
-<nav class="navbar" role="navigation" aria-label="main navigation">
+<nav *ngIf="isRequired" class="navbar" role="navigation" aria-label="main navigation">
   
   <div class="navbar-brand">
     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -25,8 +25,8 @@
 
     <div class="navbar-end">
       <div class="navbar-item">
-        <div class="buttons" *ngIf="userLogged">
-          <a routerLink="/login" routerLinkActive="active" class="button is-light" id="button">
+        <div class="buttons" *ngIf="signOut">
+          <a routerLink="/sign/up" routerLinkActive="active" class="button is-light" id="button">
             Log Out
           </a>
         </div>

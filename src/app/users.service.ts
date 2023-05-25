@@ -1,40 +1,47 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http'
+import {HttpClient, HttpHeaders} from '@angular/common/http'
 import { LoginHomeComponent } from './login/login-home/login-home.component';
+import { Observable, map } from 'rxjs';
+import { User } from './User';
+import { UserToEdit } from './Editable';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
+
+  headers = new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json')
+  httpOptions = {
+    headers: this.headers
+  }
   // the url of the server
   // collecting data from a server
   url = "http://localhost:8080/user-details"
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private ln: LoginHomeComponent,) { }
   //this function will get all the users from the server
-  getAllUsers() {
-    return this.http.get(this.url);
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.url);
   }
 
   //this function will add a single user from the server
-  addUser(data: any) {
+  addUser(data: User) {
     return this.http.post(this.url, data);
   };
 
   //this function will delete a single user from the server
-  deleteUser(id: any) {
+  deleteUser(id: number) {
     return this.http.delete(this.url + "/" + id);
   };
 
-  getUserById(id: any) {
-    return this.http.get(this.url + "/" + id);
+  getUserById(id: any){
+    return this.http.get(`${this.url}/${id}`)
   }
-  updateUserData(id: any, data: any) {
-    return this.http.put(this.url + "/" + id, data);
+  
+  updateUser(id: any, data: any){
+    return this.http.put(`${this.url}/${id}`, data)
   }
+
   // this function activate or deactivate a user
-  userStatus(id: any, data: any) {
-    return this.http.put(this.url + "/" + id, data);
-  }
 
    //checking if the user is available
    userAvailable(name: string) {
@@ -46,12 +53,24 @@ export class UsersService {
   }
 
   isLoggedIn(){
-    return sessionStorage.getItem('username') != null
+    return localStorage.getItem('username') != null
   }
 
   //user login
   login() {
     return this.http.get(this.url);
+  }
+
+  getEditClicked(user: UserToEdit): Observable<User> {
+    const url = `${this.url}/${user.id}`
+    return this.http.put<User>(url, this.httpOptions)
+  }
+
+  onEditClicked(user: User): Observable<User> {
+    const url = `${this.url}/${user.id}`
+    return this.http.put<User>(url, this.httpOptions).pipe(
+      map(() => user)
+    )
   }
    
 

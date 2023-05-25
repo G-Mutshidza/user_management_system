@@ -1,6 +1,6 @@
 <!-- navigation bar -->
 <title>Home | User Management System</title>
-<nav *ngIf="isRequired" class="navbar" role="navigation" aria-label="main navigation">
+<nav class="navbar" role="navigation" aria-label="main navigation">
   
   <div class="navbar-brand">
     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -12,29 +12,11 @@
 
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item" routerLink="" routerLinkActive="active">
-        Home
-      </a>
-      <a class="navbar-item" routerLink="/user-home" routerLinkActive="active">
-        View Users
-      </a>
-      <a class="navbar-item" routerLink="/about" routerLinkActive="active">
-        About
+      <a class="navbar-item" [routerLink]="url" routerLinkActive="active">
+        <i class="fa fa-bars"></i>
       </a>
     </div>
-
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="buttons" *ngIf="signOut">
-          <a routerLink="/sign/up" routerLinkActive="active" class="button is-light" id="button">
-            Log Out
-          </a>
-        </div>
-      </div>
-    </div>
-
   </div>
-
 </nav>
 
 <router-outlet></router-outlet>

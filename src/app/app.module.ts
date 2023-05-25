@@ -5,15 +5,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginModule } from './login/login.module';
 import { RegisterModule } from './register/register.module';
-import { UserListModule } from './user-list/user-list.module';
 import { UserManagementModule } from './user-management/user-management.module';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserListModule } from './user-list/user-list.module';
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { UpdateComponent } from './update/update.component';
+import { UpdatePasswordComponent } from './update-password/update-password.component';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
+    EditUserComponent,
+    UpdateComponent,
+    UpdatePasswordComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -24,7 +33,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     UserManagementModule,
     HttpClientModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

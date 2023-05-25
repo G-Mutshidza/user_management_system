@@ -1,0 +1,30 @@
+<!-- Update Form -->
+<div class="edit-box">
+    <h2>Update User</h2>
+    <div class="box">
+      <form class="box" [formGroup]="EditUser" (ngSubmit)="onEditSubmit()">
+  
+        <h3 class="title mb-6"></h3>
+        <div class="field">
+          <label class="label">Access Role</label>
+          <div class="control has-icons-left">
+            <input formControlName="accessrole" type="text" class="input is-rounded">
+            <span class="icon is-small is-left">
+              <i class="fa fa-user"></i>
+            </span>
+          </div>
+        </div>
+    
+        <div class="field">
+            <div class="control">
+              <button type="submit" class="button is-success">Update</button>
+              &nbsp;&nbsp;
+              <button type="submit" class="button is-normal" (click)="Cancel()">{{buttonText}}</button>
+            </div>
+          </div>
+      
+        </form>
+      </div>
+
+    </div>
+    

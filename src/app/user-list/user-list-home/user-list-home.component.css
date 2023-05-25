@@ -6,3 +6,22 @@
     justify-content: space-between;
     flex-wrap: wrap;
 }
+.edit-box {
+    position: absolute;
+    top: 60px;
+    right: 180px;
+    width: 400px;
+    border: 3px solid rgb(238, 238, 238);
+    border-radius: 15px;
+    box-shadow: 5px 10px 10px #888888;
+}
+
+.update-pass {
+    position: absolute;
+    top: 100px;
+    right: 180px;
+    width: 400px;
+    border: 3px solid rgb(238, 238, 238);
+    border-radius: 15px;
+    box-shadow: 5px 10px 10px #888888;
+}

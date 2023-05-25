@@ -30,6 +30,7 @@ export class RegisterHomeComponent implements OnInit {
   success: boolean = false
   unsuccess: boolean = false
   popup: any;
+  counter: number = 0;
 
   
   
@@ -38,34 +39,61 @@ export class RegisterHomeComponent implements OnInit {
       this.signUpForm = this.fb.group({
         name: ['', Validators.required],
         email: ['', Validators.required],
-        cellNo:  ['', Validators.required],
+        phone:  ['', Validators.required],
         password: ['', Validators.required],
-        role: ['user'],
+        role: ['Employee'],
         isActive: [false],
+        logged: [false],
         accessrole: ['user'],
-        imageUrl:  ['https://cdn.vectorstock.com/i/1000x1000/34/82/neutral-profile-picture-vector-23443482.webp']
+        imageUrl:  ['https://images.unsplash.com/photo-1583243552802-94ccb4200150?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1935&q=80']
       })
       
   }
   //on submit, this function collects all the required data on the form and store them in the database
   onSubmit = () => {
-    
-    this.user.signup(this.signUpForm.value).subscribe(res => {
 
+    if(this.signUpForm.errors){
       Swal.fire({
         position: 'center',
-        icon: 'success',
-        title: 'You are successfully registered',
+        icon: 'error',
+        title: 'An error has occurred',
         showConfirmButton: false,
         timer: 2500
       })
-      console.log(this.user)
-      this.router.navigate(['/sign-in'])
-      this.signUpForm.reset()
-    },
-    err=> {
-      this.unsuccess = true
-    })
+
+      return
+    }else {
+      if(this.signUpForm.controls['password'].value.match('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})')){
+        this.user.signup(this.signUpForm.value).subscribe(res => {
+
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'You are successfully registered',
+            showConfirmButton: false,
+            timer: 2500
+          })
+  
+          console.log(this.user)
+          this.router.navigate(['/sign-in'])
+          this.signUpForm.reset()
+        },
+        err=> {
+          this.success = false
+          this.unsuccess = true
+        })
+      }else{
+        this.signUpForm.controls['password'].reset()
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Check your password',
+          showConfirmButton: false,
+          timer: 3500
+        })
+      }
+      
+    }
     
   }
 
@@ -74,51 +102,87 @@ export class RegisterHomeComponent implements OnInit {
     if(event.match('^.{8,32}$')) {
       this.validClass.lengClass = 'success'
       this.errIcon.lengIcon = 'fa-check'
+      this.counter += 1 
     }
     else {
           this.validClass.lengClass = 'error'
           this.errIcon.lengIcon = 'fa-times'
+
+          if(this.counter > 0){
+            this.counter -= 1
+          }else if(this.counter == 0){
+            this.counter = 0
+          }
         }
 
     //checks if the password contains lowercases
     if(event.match('[a-z]')) {
       this.validClass.lowerClass = 'success'
       this.errIcon.lowerIcon = 'fa-check'
+      this.counter += 1
     }
     else {
           this.validClass.lowerClass = 'error'
           this.errIcon.lowerIcon = 'fa-times'
+
+          if(this.counter > 0){
+            this.counter -= 1
+          }else if(this.counter == 0){
+            this.counter = 0
+          }
         }
     
     //checks if the password contains uppercases
     if(event.match('[A-Z]')) {
       this.validClass.upperClass = 'success'
       this.errIcon.upperIcon = 'fa-check'
+      this.counter += 1
     }
     else {
           this.validClass.upperClass = 'error'
           this.errIcon.upperIcon = 'fa-times'
+
+          if(this.counter > 0){
+            this.counter -= 1
+          }else if(this.counter == 0){
+            this.counter = 0
+          }
         }
 
     //checks if the password contains symbols
     if(event.match('[!@#$%^&*.?]')) {
       this.validClass.charClass = 'success'
       this.errIcon.charIcon = 'fa-check'
+      this.counter += 1
     }
     else {
           this.validClass.charClass = 'error'
           this.errIcon.charIcon = 'fa-times'
+
+          if(this.counter > 0){
+            this.counter -= 1
+          }else if(this.counter == 0){
+            this.counter = 0
+          }
         }
 
     //checks if the password contains digits
     if(event.match('[0-9]')) {
       this.validClass.digitClass = 'success'
       this.errIcon.digitIcon = 'fa-check'
+      this.counter += 1
     }
     else {
           this.validClass.digitClass = 'error'
           this.errIcon.digitIcon = 'fa-times'
+
+          if(this.counter > 0){
+            this.counter -= 1
+          }else if(this.counter == 0){
+            this.counter = 0
+          }
         }
+        
     //checks if the textfield is empty
     //if empty, the password requirement labels should be greyed out
     if(this.signUpForm.controls['password'].dirty && this.signUpForm.hasError('required','password')){

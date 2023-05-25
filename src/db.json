@@ -1,26 +1,40 @@
 {
   "user-details": [
     {
-      "id": 1,
-      "name": "Given Mutshidza",
+      "name": "Given Admin",
       "email": "admin@email.com",
-      "role": "Admin",
-      "cellphone": "0727690572",
+      "role": "Administrator",
+      "phone": "0787652346",
       "password": "admin",
       "accessrole": "admin",
-      "isActive": true,
-      "logged": false
+      "isActive": "true",
+      "imageUrl": "https://images.unsplash.com/photo-1583243552802-94ccb4200150?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1935&q=80",
+      "id": 1
     },
     {
-      "name": "Herold Enime",
-      "email": "abs@gmail.com",
-      "cellNo": "0665852696",
+      "name": "Given Mutshidza",
+      "email": "given@email.com",
+      "role": "Software Developer",
+      "phone": "0635190696",
+      "oldPassword": "G1iven.Mt",
       "password": "XmVt48@mT2",
-      "role": "user",
-      "isActive": false,
+      "confPass": "XmVt48@mT2",
       "accessrole": "user",
-      "imageUrl": "https://cdn.vectorstock.com/i/1000x1000/34/82/neutral-profile-picture-vector-23443482.webp",
+      "isActive": false,
+      "imageUrl": "https://images.unsplash.com/photo-1583243552802-94ccb4200150?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1935&q=80",
       "id": 2
+    },
+    {
+      "name": "Selena Mendes",
+      "email": "selena@email.com",
+      "phone": "0635190696",
+      "password": "G1iven.Mt",
+      "role": "Employee",
+      "isActive": false,
+      "logged": false,
+      "accessrole": "user",
+      "imageUrl": "https://images.unsplash.com/photo-1583243552802-94ccb4200150?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1935&q=80",
+      "id": 3
     }
   ]
 }

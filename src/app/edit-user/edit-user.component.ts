@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { UsersService } from '../users.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -42,8 +43,16 @@ export class EditUserComponent {
 
   onEditSubmit(){
     this.buttonText = 'Close'
-    console.log(this.EditUser.value)
-    this.api.updateUser(this.route.snapshot.params['id'], this.EditUser.value).subscribe((data: any) => {})
+    
+    this.api.updateUser(this.route.snapshot.params['id'], this.EditUser.value).subscribe((data: any) => {
+    })
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'User details editted successfully',
+      showConfirmButton: false,
+      timer: 3500
+    })
   }
 
   onCheck($event: any){

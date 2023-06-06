@@ -1,8 +1,9 @@
 <!-- Update Form -->
 <div class="edit-box">
     <h2>Update User</h2>
+    <div class="column is-7-tablet is-6-desktop is-6-widescreen">
     <div class="box">
-      <form class="box" [formGroup]="EditUser" (ngSubmit)="onEditSubmit()">
+      <form class="box " [formGroup]="EditUser" (ngSubmit)="onEditSubmit()">
   
         <h3 class="title mb-6"></h3>
         <div class="field">
@@ -13,6 +14,12 @@
               <i class="fa fa-user"></i>
             </span>
           </div>
+        </div>
+        <div class="field">
+          <label class="checkbox">
+            <input type="checkbox" formControlName="isActive">
+            Activate user?
+          </label>
         </div>
     
         <div class="field">
@@ -25,6 +32,7 @@
       
         </form>
       </div>
+    </div>
 
     </div>
     

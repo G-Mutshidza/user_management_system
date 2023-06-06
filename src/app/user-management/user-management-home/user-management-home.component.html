@@ -27,7 +27,7 @@
   <h2 class="title is-3">Available Users</h2>
   <nav class="navbar">
     <input 
-      class="control" 
+      class="control search-bar" 
       type="text" 
       name="name"
       class="input is-rounded" 
@@ -46,6 +46,7 @@
           <th>Email</th>
           <th>Phone Number</th>
           <th>Role</th>
+          <th>Status</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -58,6 +59,13 @@
               <td data-label="Email">{{val.email}}</td>
               <td data-label="Phone Number">{{val.phone}}</td>
               <td data-label="Role">{{val.role}}</td>
+              <td data-label="Status">
+                <label class="switch">
+                  <input type="checkbox" [checked]="val.isActive">
+                  <span class="slider round"></span>
+                  
+                </label>
+              </td>
               <td data-label="Action">
                   <a><i (click)="deleteUser(val.id)" class="fa fa-trash fa-2x"></i></a>
                   &nbsp;&nbsp;&nbsp;

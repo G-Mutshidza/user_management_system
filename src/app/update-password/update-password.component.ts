@@ -3,6 +3,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { UsersService } from '../users.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { AES } from 'crypto-js';
+import { enc } from 'crypto-js'
 
 
 
@@ -46,7 +48,7 @@ export class UpdatePasswordComponent {
         imageUrl:  new FormControl(data.imageUrl)
       })
 
-      sessionStorage.setItem('pass', data.password)
+      
     })
   }
 
@@ -54,7 +56,13 @@ export class UpdatePasswordComponent {
     this.buttonText = "Close"
     console.log(this.EditForm.value)
 
-    if(this.EditForm.value.oldPassword !== localStorage.getItem('pass')){
+    const encryptedPass = localStorage.getItem('pass')!
+    const key = 'keyUnlock'
+    const decryptBytes = AES.decrypt(encryptedPass, key)
+    const decryptedPassword = decryptBytes.toString(enc.Utf8)
+
+
+    if(this.EditForm.value.oldPassword !== decryptedPassword){
       //Pop up message after deleting the user
       Swal.fire({
         position: 'center',
@@ -76,8 +84,15 @@ export class UpdatePasswordComponent {
         return
       }else {
 
+        this.EditForm.controls['confPass'].setValue(null)
+        this.EditForm.controls['oldPassword'].setValue(null)
+        
         this.password = this.EditForm.controls['password'].value!
+        //check if the new password matched the regex
         if(this.password.match('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})')!){
+
+          const encryptedPass = AES.encrypt(this.EditForm.controls['password'].value!, key).toString()
+          this.EditForm.controls['password'].setValue(encryptedPass)
           this.api.updateUser(this.route.snapshot.params['id'], this.EditForm.value).subscribe((data: any) => {})
 
           Swal.fire({

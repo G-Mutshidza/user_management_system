@@ -42,44 +42,11 @@ export class AppComponent {
     }
     );
     
-
     this.url = localStorage.getItem('url')!
     this.userId = Number(localStorage.getItem('userId'))!
     this.username = localStorage.getItem('username')!
     this.accessRole = localStorage.getItem('accessrole')!;
 
-    if (localStorage.getItem('accessrole') === 'admin') {
-      this.loggedUser = false
-    }
-    else {
-      this.loggedUser = true
-    }
   }
   
-
-  ngDoCheck() {
-    if(localStorage.getItem('username') === null) {
-      return false
-    }else {
-      this.signOut = true
-      return true
-    }
-  }
-
-  onEditClick() {
-    localStorage.setItem('editBtn', 'true')
-    
-    //get the user based on the id
-    
-    //populate the form with the data
-
-    //
-  }
-
-  onSignOut() {
-    localStorage.clear()
-    this.signOut = false
-    this.router.navigate(['/'])
-  }
-
 }

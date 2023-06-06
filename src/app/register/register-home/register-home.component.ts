@@ -5,6 +5,8 @@ import { UsersService } from 'src/app/users.service'
 import { Router } from '@angular/router'
 import Swal from 'sweetalert2'
 import { error } from 'jquery'
+import { AES } from 'crypto-js'
+import { enc } from 'crypto-js'
 
 
 
@@ -31,32 +33,31 @@ export class RegisterHomeComponent implements OnInit {
   unsuccess: boolean = false
   popup: any;
   counter: number = 0;
-
-  
-  
+  image ='https://cdn-icons-png.flaticon.com/512/149/149071.png?w=740&t=st=1685103621~exp=1685104221~hmac=c6b8bc9a44692127fab9376a548c3cd55e6440ab85b678733b9d7553dbf1506c'
 
   ngOnInit(): void {
+    
       this.signUpForm = this.fb.group({
         name: ['', Validators.required],
-        email: ['', Validators.required],
+        email: ['', Validators.required ],
         phone:  ['', Validators.required],
         password: ['', Validators.required],
         role: ['Employee'],
         isActive: [false],
         logged: [false],
         accessrole: ['user'],
-        imageUrl:  ['https://images.unsplash.com/photo-1583243552802-94ccb4200150?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1935&q=80']
+        imageUrl:  [this.image]
       })
       
   }
   //on submit, this function collects all the required data on the form and store them in the database
   onSubmit = () => {
-
-    if(this.signUpForm.errors){
+    
+    if(!this.signUpForm.controls['email'].value.match('(^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$)')){
       Swal.fire({
         position: 'center',
         icon: 'error',
-        title: 'An error has occurred',
+        title: 'The email entered is invalid',
         showConfirmButton: false,
         timer: 2500
       })
@@ -64,8 +65,16 @@ export class RegisterHomeComponent implements OnInit {
       return
     }else {
       if(this.signUpForm.controls['password'].value.match('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})')){
-        this.user.signup(this.signUpForm.value).subscribe(res => {
+        
+        //Encrypting password using crypto-js
+        const key = 'keyUnlock'
+        const encryptedPass = AES.encrypt(this.signUpForm.controls['password'].value, key).toString()
+        
 
+        this.signUpForm.controls['password'].setValue(encryptedPass) 
+        
+        this.user.signup(this.signUpForm.value).subscribe(res => {
+          
           Swal.fire({
             position: 'center',
             icon: 'success',

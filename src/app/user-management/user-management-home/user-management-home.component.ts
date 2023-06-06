@@ -25,12 +25,10 @@ export class UserManagementHomeComponent {
 
   ngOnInit(): void{
     this.user.getAllUsers().subscribe((allData: any) => {
-      console.log(allData);
       this.userData = allData;
     });
     this.username = localStorage.getItem('username')!;
     
-    localStorage.setItem('adminIsLogged', 'admin')
 
   }
   
@@ -44,7 +42,7 @@ export class UserManagementHomeComponent {
       this.ngOnInit();
     } else {
       this.userData = this.userData.filter((res: any) => {
-        return res.name.toLocaleLowerCase().match(this.name.toLocaleLowerCase());
+        return res.name.toLocaleLowerCase().match(this.name.toLocaleLowerCase())!;
       })
     }
   }

@@ -25,13 +25,13 @@ export class UsersService {
 
   //this function will add a single user from the server
   addUser(data: User) {
-    return this.http.post(this.url, data);
-  };
+    return this.http.post(this.url, data)
+  }
 
   //this function will delete a single user from the server
   deleteUser(id: number) {
-    return this.http.delete(this.url + "/" + id);
-  };
+    return this.http.delete(this.url + "/" + id)
+  }
 
   getUserById(id: any){
     return this.http.get(`${this.url}/${id}`)
@@ -40,39 +40,18 @@ export class UsersService {
   updateUser(id: any, data: any){
     return this.http.put(`${this.url}/${id}`, data)
   }
-
-  // this function activate or deactivate a user
-
-   //checking if the user is available
-   userAvailable(name: string) {
-    this.http.post<any>("http://localhost:8080/user-available", {name })
-  }
    
   signup(data: any) {
-    return this.http.post(this.url, data);
+    return this.http.post(this.url, data)
   }
 
   isLoggedIn(){
     return localStorage.getItem('username') != null
   }
-
-  //user login
-  login() {
-    return this.http.get(this.url);
+  isNotLoggedIn() {
+    return localStorage.getItem('username') === null
   }
 
-  getEditClicked(user: UserToEdit): Observable<User> {
-    const url = `${this.url}/${user.id}`
-    return this.http.put<User>(url, this.httpOptions)
-  }
-
-  onEditClicked(user: User): Observable<User> {
-    const url = `${this.url}/${user.id}`
-    return this.http.put<User>(url, this.httpOptions).pipe(
-      map(() => user)
-    )
-  }
-   
 
 }
 

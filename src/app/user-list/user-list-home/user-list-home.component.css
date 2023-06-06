@@ -1,8 +1,9 @@
 .card {
     width: 350px;
+    margin-bottom: 40px;
 }
 .cards {
-    display: flex;
+    display:flex;
     justify-content: space-between;
     flex-wrap: wrap;
 }
@@ -24,4 +25,7 @@
     border: 3px solid rgb(238, 238, 238);
     border-radius: 15px;
     box-shadow: 5px 10px 10px #888888;
+}
+.hovered:hover {
+    background:rgb(236, 253, 253)
 }

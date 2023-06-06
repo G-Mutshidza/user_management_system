@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AES, enc } from 'crypto-js';
 import { User } from 'src/app/User';
 import { LoginsService } from 'src/app/logins.service';
 import Swal from 'sweetalert2';
@@ -37,6 +38,7 @@ export class LoginHomeComponent {
   }
 
 
+  
   onSubmit() {
     //user login validation
     
@@ -47,32 +49,54 @@ export class LoginHomeComponent {
       console.log(user)
       //if the user login user is available in the database then redirect to designated route
       if (user) {
-        if(user.password === this.loginForm.value.password){
 
-          if (user.accessrole === 'admin') {
-            this.accessUrl = '/admin-home'
-          }else if (user.accessrole === 'user')  {
-            this.accessUrl = '/user-home'
+        localStorage.setItem('pass', user.password)
+        //decrypting password using crypto-js
+        const encryptedPassword = user.password
+        const key = 'keyUnlock'
+        const decryptBytes = AES.decrypt(encryptedPassword, key)
+        const decryptedPassword = decryptBytes.toString(enc.Utf8)
+
+        if(decryptedPassword === this.loginForm.value.password){
+          localStorage.setItem('isActive', `${user.isActive}`)
+          if(localStorage.getItem('isActive') == "true"!){
+
+            if (user.accessrole === 'admin') {
+              this.accessUrl = '/admin-home'
+            }else if (user.accessrole === 'user')  {
+              this.accessUrl = '/user-home'
+            }
+            this.deleteMsg()
+            this.loginForm.reset()    
+            this.route.navigate([this.accessUrl])
+          
+            localStorage.setItem('username', user.name)
+            localStorage.setItem('accessrole', user.accessrole)
+            localStorage.setItem('url', this.accessUrl)
+            localStorage.setItem('userId', user.id)
+            // localStorage.setItem('logged', user.logged)
+            // // class from sweet alert to display a message to the user 
+            // and to redirect to the designated route 
+            // after the user logged in successfully
+            Swal.fire({
+              position: 'center',
+              icon: 'success', 
+              title: user.name + ' have successfully logged in',
+              showConfirmButton: false,
+              timer: 2500
+            })
+          }else {
+
+            Swal.fire({
+              position: 'center',
+              icon: 'error', 
+              title: 'You need access from the Admin!',
+              showConfirmButton: false,
+              timer: 4000
+            })
+
           }
-          this.deleteMsg()
-          this.loginForm.reset()    
-          this.route.navigate([this.accessUrl])
-        
-          localStorage.setItem('username', user.name)
-          localStorage.setItem('accessrole', user.accessrole)
-          localStorage.setItem('url', this.accessUrl)
-          localStorage.setItem('userId', user.id)
-          // sessionStorage.setItem('logged', user.logged)
-          // // class from sweet alert to display a message to the user 
-          // and to redirect to the designated route 
-          // after the user logged in successfully
-          Swal.fire({
-            position: 'center',
-            icon: 'success', 
-            title: user.name + ' have successfully logged in',
-            showConfirmButton: false,
-            timer: 2500
-          })
+
         }
         else {
 

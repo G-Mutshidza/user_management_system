@@ -8,6 +8,10 @@
     font-size: 25px;
 }
 #num-items {
-    border-radius: 5px;
+    
+    border-radius: 2px;
     width: 50px;
+}
+.search-bar {
+    width: 60%;
 }

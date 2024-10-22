@@ -1,51 +1,29 @@
 {
   "user-details": [
     {
-      "name": "Given Admin",
-      "email": "admin@email.com",
-      "phone": "0727690572",
-      "password": "U2FsdGVkX19ulyGeljbfwDh0OqlD774odKi2wyjYRNU=",
-      "role": "Administrator",
+      "id": "afcb",
+      "name": "Given Sadiki Mutshidza",
+      "email": "sadikig@email.com",
+      "phone": "0722760965",
+      "password": "U2FsdGVkX1/DOpE5iX0ykD2ktTBaEiN6M+eEumkQuyA=",
+      "role": "Employee",
       "isActive": true,
       "logged": false,
       "accessrole": "admin",
-      "imageUrl": "https://cdn-icons-png.flaticon.com/512/149/149071.png?w=740&t=st=1685103621~exp=1685104221~hmac=c6b8bc9a44692127fab9376a548c3cd55e6440ab85b678733b9d7553dbf1506c",
-      "id": 1
+      "imageUrl": "https://cdn-icons-png.flaticon.com/512/149/149071.png?w=740&t=st=1685103621~exp=1685104221~hmac=c6b8bc9a44692127fab9376a548c3cd55e6440ab85b678733b9d7553dbf1506c"
     },
     {
-      "name": "Given Mutshidza",
-      "email": "mutshidza@email.com",
-      "role": "Employee",
+      "name": "Given Admin",
+      "email": "admin@email.com",
+      "role": "Admin",
       "phone": "0727690572",
       "oldPassword": null,
-      "password": "U2FsdGVkX19DlhCQzJ/ll2RGchWVVRjfv5ZAMsiekbs=",
+      "password": "U2FsdGVkX19VhCj6DxGt4fw7rG44jWcVZH0wH5OH2Ec=",
       "confPass": null,
       "accessrole": "user",
       "isActive": true,
       "imageUrl": "https://cdn-icons-png.flaticon.com/512/149/149071.png?w=740&t=st=1685103621~exp=1685104221~hmac=c6b8bc9a44692127fab9376a548c3cd55e6440ab85b678733b9d7553dbf1506c",
-      "id": 2
-    },
-    {
-      "name": "Tsepiso Sadiki",
-      "email": "tsepiso@email.com",
-      "role": "Employee",
-      "phone": "0792855572",
-      "password": "U2FsdGVkX1/CyLKQGcWlRYM8Mlstcz9uO3X0+yut2BQ=",
-      "accessrole": "user",
-      "isActive": true,
-      "imageUrl": "https://cdn-icons-png.flaticon.com/512/149/149071.png?w=740&t=st=1685103621~exp=1685104221~hmac=c6b8bc9a44692127fab9376a548c3cd55e6440ab85b678733b9d7553dbf1506c",
-      "id": 3
-    },
-    {
-      "name": "Fulufhelo Sadiki",
-      "email": "fulufhelo@email.com",
-      "role": "Employee",
-      "phone": "0635190696",
-      "password": "U2FsdGVkX1+u2CmO52rXPJYLyqgGSqo4FnzEZCAjDRI=",
-      "accessrole": "user",
-      "isActive": true,
-      "imageUrl": "https://cdn-icons-png.flaticon.com/512/149/149071.png?w=740&t=st=1685103621~exp=1685104221~hmac=c6b8bc9a44692127fab9376a548c3cd55e6440ab85b678733b9d7553dbf1506c",
-      "id": 4
+      "id": "f960"
     }
   ]
 }
